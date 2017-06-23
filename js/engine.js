@@ -80,7 +80,15 @@ var Engine = (function(global) {
      */
     function update(dt) {
         updateEntities(dt);
-        // checkCollisions();
+        checkCollisions();
+    }
+
+    function checkCollisions() {
+      allEnemies.forEach(function (enemy){
+        if (player.y == enemy.y && player.x < enemy.x + 50 && player.x + 50 > enemy.x ) {
+          player.reset();
+        }
+      });
     }
 
     /* This is called by the update function and loops through all of the

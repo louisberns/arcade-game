@@ -21,7 +21,6 @@ Enemy.prototype.update = function(dt) {
   // all computers.
   console.log("update");
   this.x = this.x + 101 * dt * this.speed;
-
   if (this.x > 700) {
     this.respaw();
   }
@@ -60,6 +59,13 @@ Player.prototype.update = function() {
   this.y;
 };
 
+Player.prototype.reset = function() {
+  //Redraw player on initial position after collision w/ enemy
+  this.x = this.xInit;
+  this.y = this.yInit;
+  player.render();
+}
+
 Player.prototype.render = function() {
   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
@@ -91,8 +97,6 @@ Player.prototype.handleInput = function(key) {
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
-// Place the player object in a variable called player
-
 var allEnemies = [];
 
 for (var i = 0; i < 5; i++) {
@@ -102,6 +106,7 @@ for (var i = 0; i < 5; i++) {
   allEnemies.push(enemy);
 }
 
+// Place the player object in a variable called player
 var player = new Player(303, 380);
 
 // This listens for key presses and sends the keys to your
