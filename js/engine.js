@@ -14,7 +14,7 @@
  * a little simpler to work with.
  */
 
-var Engine = (function(global) {
+var Engine = (function (global) {
     /* Predefine the variables we'll be using within this scope,
      * create the canvas element, grab the 2D context for that canvas
      * set the canvas elements height/width and add it to the DOM.
@@ -81,15 +81,27 @@ var Engine = (function(global) {
     function update(dt) {
         updateEntities(dt);
         checkCollisions();
+        checkGemCollect();
     }
 
+    //Check if player collide with enemies, also check if player goes into water
     function checkCollisions() {
-      allEnemies.forEach(function (enemy){
-        if (player.y == enemy.y && player.x < enemy.x + 50 && player.x + 50 > enemy.x ) {
+      allEnemies.forEach(function (enemy) {
+        if (player.y === enemy.y && player.x < enemy.x + 50 && player.x + 50 > enemy.x) {
+          player.reset();
+        } else if (player.y === -20 /*&& is not a portal*/) {
           player.reset();
         }
       });
     }
+
+    function checkGemCollect() {
+      allGems.forEach(function(gem) {
+        if (player.y + 50 === gem.y && player.x + 20 === gem.x) {
+          gem.collect(gem.Id);
+        }
+      });
+    };
 
     /* This is called by the update function and loops through all of the
      * objects within your allEnemies array as defined in app.js and calls
@@ -104,6 +116,14 @@ var Engine = (function(global) {
         });
         player.update();
     }
+
+    /* This function does nothing but it could have been a good place to
+    * handle game reset states - maybe a new game menu or a game over screen
+    * those sorts of things. It's only called once by the init() method.
+    */
+   function reset() {
+       // noop
+   }
 
     /* This function initially draws the "game level", it will then call
      * the renderEntities function. Remember, this function is called every
@@ -158,16 +178,11 @@ var Engine = (function(global) {
         allEnemies.forEach(function(enemy) {
             enemy.render();
         });
+        allGems.forEach(function(gem) {
+            gem.render();
+        });
 
         player.render();
-    }
-
-    /* This function does nothing but it could have been a good place to
-     * handle game reset states - maybe a new game menu or a game over screen
-     * those sorts of things. It's only called once by the init() method.
-     */
-    function reset() {
-        // noop
     }
 
     /* Go ahead and load all of the images we know we're going to need to
@@ -179,7 +194,11 @@ var Engine = (function(global) {
         'images/water-block.png',
         'images/grass-block.png',
         'images/enemy-bug.png',
-        'images/char-boy.png'
+        'images/char-boy.png',
+        'images/g-blue.png',
+        'images/g-green.png',
+        'images/g-orange.png',
+        'images/selector.png'
     ]);
     Resources.onReady(init);
 

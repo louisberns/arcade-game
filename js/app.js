@@ -1,3 +1,20 @@
+/*TODO:
+ *Add gems that player have to collect
+ *Make a portal after player collects all gems
+ *Add a Win statement if player make to the portal w/ all gems
+ */
+
+//Global vars to randomize enemies and gems creations
+
+//For set y values to create enemies
+var yLanes = [300, 220, 140, 60];
+//For set y values to create gems, +50 to aligment purpose
+var yGems = [350, 270, 190, 110]
+//Used to define x in gems, +20 to aligment purpose
+var xCol = [20, 121, 222, 323, 424, 525, 626];
+//Array to define gem sprites
+var gemImg = ['blue', 'green', 'orange']
+
 // Enemies our player must avoid
 var Enemy = function(x, y) {
   // Variables applied to each of our instances go here,
@@ -26,15 +43,12 @@ Enemy.prototype.update = function(dt) {
   }
 };
 
-//For set y values to create enemy
-var yRespaw = [300, 220, 140, 60];
-
 //Respaw enemies into the game
 Enemy.prototype.respaw = function () {
   this.x = -200;
-  this.y = yRespaw[Math.floor(Math.random() * 5)];
+  this.y = yLanes[Math.floor(Math.random() * 5)];
   this.speed = Math.floor((Math.random() * 5) + 1);
-}
+};
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
@@ -54,18 +68,19 @@ var Player = function(x, y) {
   this.yInit = y;
 };
 
+//Update player on actual
 Player.prototype.update = function() {
   this.x;
   this.y;
 };
 
+//Redraw player on initial position after collision w/ enemy
 Player.prototype.reset = function() {
-  //Redraw player on initial position after collision w/ enemy
   this.x = this.xInit;
   this.y = this.yInit;
-  player.render();
-}
+};
 
+//Render player on canvas
 Player.prototype.render = function() {
   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
@@ -92,16 +107,98 @@ Player.prototype.handleInput = function(key) {
         this.x += 101;
       }
       break;
-  };
+  }
 };
 
+//Constructor for Gems
+var Gem = function (x, y, n) {
+  this.x = x;
+  this.y = y;
+  this.sprite = 'images/g-' + gemImg[n] + '.png';
+  this.Id = n;
+  this.state = false;
+};
+
+Gem.prototype.collect = function(Id) {
+  //Check wich gem was collected
+  switch (Id) {
+    case 0:
+      this.x = 20;
+      this.y = 430;
+      this.state = true;
+      break;
+    case 1:
+      this.x = 121;
+      this.y = 430;
+      this.state = true;
+      break;
+    case 2:
+      this.x = 222;
+      this.y = 430;
+      this.state = true;
+      break;
+  }
+};
+
+Gem.prototype.update = function() {
+  this.x;
+  this.y;
+}
+
+//Render Gems to the screen
+Gem.prototype.render = function() {
+  ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+}
+
+Portal = function(x, y) {
+  this.x = x;
+  this.y = y;
+  this.sprite = 'images/selector.png'
+}
+
+/*
+Portal.prototype.update = function() {
+  if (gem.state === true) {
+   portal = new Portal(707, -20);
+ }
+ /*Player wins the game
+  *create a condition to verify if player position is equal to portal position,
+  *if is true, player wins
+  /
+ if (gem.state === true) {
+   if (player.x === portal.x && player.y === portal.y) {
+     //Runs win animation
+   }
+ }
+}*/
+
+
+
+Portal.prototype.render = function() {
+  ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+}
+
 // Now instantiate your objects.
+
+//Define portal variable
+var portal;
+
+//Place all gems
+var allGems = [];
+
+for (var z = 0; z < gemImg.length; z++) {
+  var x = xCol[Math.floor(Math.random() * 7)];
+  var y = yGems[Math.floor(Math.random() * 3)];
+  var n = z;
+  var gem = new Gem(x, y, n);
+  allGems.push(gem);
+}
 // Place all enemy objects in an array called allEnemies
 var allEnemies = [];
 
 for (var i = 0; i < 5; i++) {
   var x = Math.floor(Math.random() * -10 + 1);
-  var y = yRespaw[Math.floor(Math.random() * 5)];
+  var y = yLanes[Math.floor(Math.random() * 5)];
   var enemy = new Enemy(x, y);
   allEnemies.push(enemy);
 }
