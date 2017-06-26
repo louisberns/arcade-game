@@ -153,27 +153,19 @@ Gem.prototype.render = function() {
 Portal = function(x, y) {
   this.x = x;
   this.y = y;
-  this.sprite = 'images/selector.png'
+  this.sprite = 'images/selector.png';
+  //this.state = false;
 }
 
-/*
-Portal.prototype.update = function() {
-  if (gem.state === true) {
-   portal = new Portal(707, -20);
- }
+
+Portal.prototype.win = function() {
  /*Player wins the game
   *create a condition to verify if player position is equal to portal position,
   *if is true, player wins
-  /
- if (gem.state === true) {
-   if (player.x === portal.x && player.y === portal.y) {
-     //Runs win animation
-   }
- }
-}*/
+  */
+};
 
-
-
+//Render portal to the screen
 Portal.prototype.render = function() {
   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 }
@@ -181,7 +173,7 @@ Portal.prototype.render = function() {
 // Now instantiate your objects.
 
 //Define portal variable
-var portal;
+var portal = new Portal(606, -40);
 
 //Place all gems
 var allGems = [];
@@ -193,12 +185,13 @@ for (var z = 0; z < gemImg.length; z++) {
   var gem = new Gem(x, y, n);
   allGems.push(gem);
 }
+
 // Place all enemy objects in an array called allEnemies
 var allEnemies = [];
 
-for (var i = 0; i < 5; i++) {
+for (var i = 0; i < 7; i++) {
   var x = Math.floor(Math.random() * -10 + 1);
-  var y = yLanes[Math.floor(Math.random() * 5)];
+  var y = yLanes[Math.floor(Math.random() * 7)];
   var enemy = new Enemy(x, y);
   allEnemies.push(enemy);
 }

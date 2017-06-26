@@ -82,6 +82,7 @@ var Engine = (function (global) {
         updateEntities(dt);
         checkCollisions();
         checkGemCollect();
+        checkPortal();
     }
 
     //Check if player collide with enemies, also check if player goes into water
@@ -89,18 +90,34 @@ var Engine = (function (global) {
       allEnemies.forEach(function (enemy) {
         if (player.y === enemy.y && player.x < enemy.x + 50 && player.x + 50 > enemy.x) {
           player.reset();
-        } else if (player.y === -20 /*&& is not a portal*/) {
+        } else if (player.y === -20 && player.x !== portal.x) {
+          //Prevent that player goes to water
+          player.reset();
+        } else if (!allCollected && player.x === portal.x && player.y - 20 === portal.y) {
+          //Prevent that player goes to portal location before collect all gems ans portal appears
           player.reset();
         }
       });
     }
 
+    //Check if player collect gems and if all gems have been collected
+    var allCollected = false;
     function checkGemCollect() {
       allGems.forEach(function(gem) {
         if (player.y + 50 === gem.y && player.x + 20 === gem.x) {
           gem.collect(gem.Id);
         }
       });
+      if (allGems[0].state === true && allGems[1].state === true && allGems[2].state === true) {
+        allCollected = true;
+      }
+    }
+
+
+    function checkPortal() {
+      if (player.y - 20 === portal.y && player.x === portal.x) {
+        console.log("WIN!");
+      }
     };
 
     /* This is called by the update function and loops through all of the
@@ -183,6 +200,10 @@ var Engine = (function (global) {
         });
 
         player.render();
+
+        if (allCollected) {
+          portal.render();
+        }
     }
 
     /* Go ahead and load all of the images we know we're going to need to
