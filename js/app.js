@@ -1,7 +1,11 @@
 /*TODO:
- *Add gems that player have to collect
- *Make a portal after player collects all gems
- *Add a Win statement if player make to the portal w/ all gems
+ *Add method for reseting the game
+ *Pause the functions after player wins or loses the game
+ *Add message for winners
+ *Add message for losers
+ *Add text to explain how to win the game
+ *Add easter egg
+ *Fix graphics errors
  */
 
 //Global vars to randomize enemies and gems creations
