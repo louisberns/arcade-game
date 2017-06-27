@@ -65,7 +65,7 @@ Enemy.prototype.render = function() {
 var Player = function(x, y) {
   this.x = x;
   this.y = y;
-  this.sprite = 'images/char-boy.png';
+  this.sprite = 'images/char-horn-girl.png';
 
   //Player initial location for reseting
   this.xInit = x;
@@ -82,6 +82,7 @@ Player.prototype.update = function() {
 Player.prototype.reset = function() {
   this.x = this.xInit;
   this.y = this.yInit;
+
 };
 
 //Render player on canvas
@@ -119,8 +120,15 @@ var Gem = function (x, y, n) {
   this.x = x;
   this.y = y;
   this.sprite = 'images/g-' + gemImg[n] + '.png';
+
+  //Identifier for each gem
   this.Id = n;
+  //Define state for gems, used to open portal
   this.state = false;
+
+  //Store the initial x and y values for gems reset
+  this.xInit = this.x;
+  this.yInit = this.y;
 };
 
 Gem.prototype.collect = function(Id) {
@@ -142,6 +150,12 @@ Gem.prototype.collect = function(Id) {
       this.state = true;
       break;
   }
+};
+
+Gem.prototype.reset = function() {
+  this.x = this.xInit;
+  this.y = this.yInit;
+  this.state = false;
 };
 
 Gem.prototype.update = function() {
@@ -177,12 +191,12 @@ Portal.prototype.render = function() {
 // Now instantiate your objects.
 
 //Define portal variable
-var portal = new Portal(606, -40);
+var portal = new Portal(707, -40);
 
 //Place all gems
 var allGems = [];
 
-for (var z = 0; z < gemImg.length; z++) {
+for (z = 0; z < gemImg.length; z++) {
   var x = xCol[Math.floor(Math.random() * 7)];
   var y = yGems[Math.floor(Math.random() * 3)];
   var n = z;

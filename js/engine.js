@@ -90,12 +90,21 @@ var Engine = (function (global) {
       allEnemies.forEach(function (enemy) {
         if (player.y === enemy.y && player.x < enemy.x + 50 && player.x + 50 > enemy.x) {
           player.reset();
+          allGems.forEach(function(gem) {
+            gem.reset();
+          });
         } else if (player.y === -20 && player.x !== portal.x) {
           //Prevent that player goes to water
           player.reset();
+          allGems.forEach(function(gem) {
+            gem.reset();
+          });
         } else if (!allCollected && player.x === portal.x && player.y - 20 === portal.y) {
-          //Prevent that player goes to portal location before collect all gems ans portal appears
+          //Prevent that player goes to portal location before collect all gems and portal appears
           player.reset();
+          allGems.forEach(function(gem) {
+            gem.reset();
+          });
         }
       });
     }
@@ -109,7 +118,10 @@ var Engine = (function (global) {
         }
       });
       if (allGems[0].state === true && allGems[1].state === true && allGems[2].state === true) {
+        portal.x = 606;
         allCollected = true;
+      } else {
+        portal.x = 707;
       }
     }
 
@@ -192,18 +204,14 @@ var Engine = (function (global) {
         /* Loop through all of the objects within the allEnemies array and call
          * the render function you have defined.
          */
-        allEnemies.forEach(function(enemy) {
-            enemy.render();
-        });
         allGems.forEach(function(gem) {
             gem.render();
         });
-
+        allEnemies.forEach(function(enemy) {
+            enemy.render();
+        });
+        portal.render();
         player.render();
-
-        if (allCollected) {
-          portal.render();
-        }
     }
 
     /* Go ahead and load all of the images we know we're going to need to
@@ -215,11 +223,11 @@ var Engine = (function (global) {
         'images/water-block.png',
         'images/grass-block.png',
         'images/enemy-bug.png',
-        'images/char-boy.png',
+        'images/selector.png',
+        'images/char-horn-girl.png',
         'images/g-blue.png',
         'images/g-green.png',
-        'images/g-orange.png',
-        'images/selector.png'
+        'images/g-orange.png'
     ]);
     Resources.onReady(init);
 
