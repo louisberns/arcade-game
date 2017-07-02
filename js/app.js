@@ -1,13 +1,3 @@
-/*TODO:
- *Add method for reseting the game
- *Pause the functions after player wins or loses the game
- *Add message for winners
- *Add message for losers
- *Add text to explain how to win the game
- *Add easter egg
- *Fix graphics errors
- */
-
 //Global vars to randomize enemies and gems creations
 
 //For set y values to create enemies
@@ -18,6 +8,8 @@ var yGems = [350, 270, 190, 110]
 var xCol = [20, 121, 222, 323, 424, 525, 626];
 //Array to define gem sprites
 var gemImg = ['blue', 'green', 'orange']
+//Variable to check if player win
+var playerWins = false;
 
 // Enemies our player must avoid
 var Enemy = function(x, y) {
@@ -112,6 +104,11 @@ Player.prototype.handleInput = function(key) {
         this.x += 101;
       }
       break;
+    case 'spacebar':
+      if (playerWins) {
+        gameReset();
+      }
+      break;
   }
 };
 
@@ -152,6 +149,7 @@ Gem.prototype.collect = function(Id) {
   }
 };
 
+//Reset gems on same position of initial game if player gets hit or dies
 Gem.prototype.reset = function() {
   this.x = this.xInit;
   this.y = this.yInit;
@@ -172,16 +170,7 @@ Portal = function(x, y) {
   this.x = x;
   this.y = y;
   this.sprite = 'images/selector.png';
-  //this.state = false;
 }
-
-
-Portal.prototype.win = function() {
- /*Player wins the game
-  *create a condition to verify if player position is equal to portal position,
-  *if is true, player wins
-  */
-};
 
 //Render portal to the screen
 Portal.prototype.render = function() {
@@ -217,10 +206,30 @@ for (var i = 0; i < 7; i++) {
 // Place the player object in a variable called player
 var player = new Player(303, 380);
 
+//Print a message to the player on screen
+var winGame = function() {
+  playerWins = true;
+}
+
+//Function for reseting the game
+var gameReset = function() {
+  allGems = [];
+  for (z = 0; z < gemImg.length; z++) {
+    var x = xCol[Math.floor(Math.random() * 7)];
+    var y = yGems[Math.floor(Math.random() * 3)];
+    var n = z;
+    var gem = new Gem(x, y, n);
+    allGems.push(gem);
+  }
+  playerWins = false;
+  player.reset();
+}
+
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', function(e) {
   var allowedKeys = {
+      32: 'spacebar',
       37: 'left',
       38: 'up',
       39: 'right',

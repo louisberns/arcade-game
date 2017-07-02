@@ -129,6 +129,8 @@ var Engine = (function (global) {
     function checkPortal() {
       if (player.y - 20 === portal.y && player.x === portal.x) {
         console.log("WIN!");
+        //calls win functions
+        winGame();
       }
     };
 
@@ -212,6 +214,11 @@ var Engine = (function (global) {
         });
         portal.render();
         player.render();
+        if (playerWins) {
+          //Message for player after wins
+          var imgWin = 'images/win-game.png';
+          ctx.drawImage(Resources.get(imgWin), 0, 0);
+        }
     }
 
     /* Go ahead and load all of the images we know we're going to need to
@@ -227,7 +234,8 @@ var Engine = (function (global) {
         'images/char-horn-girl.png',
         'images/g-blue.png',
         'images/g-green.png',
-        'images/g-orange.png'
+        'images/g-orange.png',
+        'images/win-game.png'
     ]);
     Resources.onReady(init);
 
