@@ -1,6 +1,18 @@
-frontend-nanodegree-arcade-game
+Collect the Gems - Arcade Game Clone
 ===============================
 
-Students should use this [rubric](https://review.udacity.com/#!/projects/2696458597/rubric) for self-checking their submission. Make sure the functions you write are **object-oriented** - either class functions (like Player and Enemy) or class prototype functions such as Enemy.prototype.checkCollisions, and that the keyword 'this' is used appropriately within your class and class prototype functions to refer to the object the function is called upon. Also be sure that the **readme.md** file is updated with your instructions on both how to 1. Run and 2. Play your arcade game.
+This project is a game for [Udacity Front-end Web Developer Nanodegree](https://www.udacity.com/course/front-end-web-developer-nanodegree--nd001/?gclid=Cj0KEQjw-ezKBRCGwqyK0rHzmvkBEiQAu-_-LE25r8Vqslp7w6fvH_tISPwEJ-s0mLjGDovQYWY6QJkaAhKP8P8HAQ), made with Javascript and runs in any browser.
 
-For detailed instructions on how to get started, check out this [guide](https://docs.google.com/document/d/1v01aScPjSWCCWQLIpFqvg3-vXLH2e8_SZQKC8jNO0Dc/pub?embedded=true).
+#### Play Online
+You can access the game online here: [Arcade Game](https://louisberns.github.io/arcade-game/)
+
+#### Download and Play
+You can simply download the game from GitHub or clone the repository, after you do that open the `index.html` file in a browser and start playing.
+
+## How to play
+- You can use the arrow keys to move the **player** over the screen
+- Avoid the **bugs**, if you get hit, the game starts again
+- Don't go into the **water**, if you do the game starts again
+- Collect all gems to open the **Portal**
+- After collected all gems you have to enter the **Portal**
+- If you arrive to the **Portal** you win the game!

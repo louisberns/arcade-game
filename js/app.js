@@ -196,7 +196,7 @@ for (z = 0; z < gemImg.length; z++) {
 // Place all enemy objects in an array called allEnemies
 var allEnemies = [];
 
-for (var i = 0; i < 7; i++) {
+for (var i = 0; i < 9; i++) {
   var x = Math.floor(Math.random() * -10 + 1);
   var y = yLanes[Math.floor(Math.random() * 7)];
   var enemy = new Enemy(x, y);
